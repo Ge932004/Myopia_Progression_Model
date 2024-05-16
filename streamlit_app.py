@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-model = joblib.load("clf.pkl")
+clf = joblib.load("clf.pkl")
+
 # Title
 st.header("Streamlit Machine Learning App")
 
