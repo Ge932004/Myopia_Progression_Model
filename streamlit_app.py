@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
+import joblib
 
-
+model = joblib.load("clf.pkl")
 # Title
 st.header("Streamlit Machine Learning App")
 
@@ -23,9 +24,6 @@ Vision_correction = st.number_input("Vision_correction")
 
 # If button is pressed
 if st.button("Submit"):
-    
-    # Unpickle classifier
-    clf = joblib.load("clf.pkl")
     
     # Store inputs into dataframe
     X = pd.DataFrame([[SE_right, Age_group, School, UDVA_group, Vision_correction]], 
