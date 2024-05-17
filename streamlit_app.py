@@ -1,7 +1,12 @@
 import streamlit as st
 import pandas as pd
-pip install joblib
-import joblib
+import subprocess
+
+# 定义要安装的模块名称
+module_name = "joblib"
+
+# 使用 subprocess 运行 pip install 命令
+subprocess.call(["pip", "install", module_name])
 
 clf = joblib.load("clf.pkl")
 
