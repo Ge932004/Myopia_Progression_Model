@@ -7,6 +7,11 @@ module_name = "joblib"
 
 # 使用 subprocess 运行 pip install 命令
 subprocess.call(["pip", "install", module_name])
+
+# 重新导入模块
+import importlib
+importlib.import_module("joblib")
+
 import joblib
 clf = joblib.load("clf.pkl")
 
