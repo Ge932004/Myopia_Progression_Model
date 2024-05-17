@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-!pip install joblib
+pip install joblib
 import joblib
 
 clf = joblib.load("clf.pkl")
