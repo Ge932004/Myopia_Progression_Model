@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import subprocess
-
+import joblib
 # 定义要安装的模块名称
 module_name = "joblib"
 
