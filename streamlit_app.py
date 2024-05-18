@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import subprocess
-
+import shap
+import matplotlib.pyplot as plt
 # 定义要安装的模块名称
 module_name = "joblib"
 
@@ -40,6 +41,25 @@ if st.button("Submit"):
     # Store inputs into dataframe
     X = pd.DataFrame([[SE_right, Age_group, School, UDVA_group, Vision_correction]], 
                      columns = ["SE_right", "Age_group", "School","UDVA_group","Vision_correction"])
+    class StackingClassifierWrapper:
+    def __init__(self, model):
+        self.model = model
+    def predict(self, X):
+        return self.model.predict(X)   
+    wrapped_model = StackingClassifierWrapper(clf)
+    explainer = shap.Explainer(wrapped_model.predict, X)
+    shap_values = explainer(X)
+
+    temp = np.round(x_test, 2)
+    shap.force_plot(explainer.expected_value[1], shap_values[1],temp,
+         feature_names = ["SE_right", "Age_group", "School","UDVA_group","Vision_correction"], matplotlib=True, show=False)
+      plt.xticks(fontproperties='Times New Roman', size=15)
+      plt.yticks(fontproperties='Times New Roman', size=20)
+      plt.tight_layout()
+      plt.savefig("force plot.png",dpi=600) 
+      pred = model.predict_proba(X)
+      st.markdown("#### _Based on feature values, predicted possibility of myopia progression is {}%_".format(round(pred[0][1], 4)*100))
+      st.image('myopia progression force plot.png')
     
     # Get prediction
     prediction = clf.predict(X)[0]
